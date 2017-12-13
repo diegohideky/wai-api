@@ -1,0 +1,34 @@
+{
+  "name": "wai-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegohideky/wai-api.git"
+  },
+  "author": "Diego Hideky de Oliveira Lima",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diegohideky/wai-api/issues"
+  },
+  "homepage": "https://github.com/diegohideky/wai-api#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "connect-redis": "^3.3.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
+    "express-load": "^1.1.16",
+    "express-session": "^1.15.6",
+    "mongoose": "^4.12.3",
+    "mpromise": "^0.5.5",
+    "passport": "^0.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.7.1"
+  }
+}
