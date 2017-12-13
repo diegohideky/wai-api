@@ -2,7 +2,8 @@
 
 'use strict';
 
-var encrypt = require('./../utils/encrypt');
+var encrypt = require('./../utils/encrypt')
+  , HttpStatus  = require('http-status-codes');
 
 module.exports = function (app) {
   var repo = app.repositories.user;
@@ -14,7 +15,7 @@ module.exports = function (app) {
       if (!doc) {
         encryptPassword(body, callback);
       } else {
-        callback({status: 400, doc: null, message: 'Usuário já existe!'});
+        callback({status: HttpStatus.BAD_REQUEST, message: 'Usuário já existe!'});
       }
     });
   };
@@ -26,14 +27,14 @@ module.exports = function (app) {
 
         insertOnDB(body, callback);
       } else {
-        callback({status: 500, doc: null, message: 'Não foi possível criptografar senha!'});
+        callback({status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'Não foi possível criptografar senha!'});
       }
     });
   };
 
   var insertOnDB = function (body, callback) {
     repo.insertUser(body, function (doc) {
-      var status = doc ? 200 : 500
+      var status = doc ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR
         , message = doc ? 'Usuário cadastrado com sucesso' : 'Não foi possível cadastrar usuário!';
 
       callback({status: status, doc: doc, message: message});
@@ -43,7 +44,7 @@ module.exports = function (app) {
   return {
     findAll: function (req, res) {
       repo.findUsers(function (docs) {
-        var status = docs.length > 0 ? 200 : 204;
+        var status = docs.length > 0 ? HttpStatus.OK : HttpStatus.CREATED;
 
         res.status(status).send({users: docs});
       });
@@ -63,8 +64,8 @@ module.exports = function (app) {
           user.set(body);
 
           repo.updateUser(user, function (updated) {
-            var status = updated ? 200 : 400
-              , message = updated ? 'Contrato atualizado com sucesso' : 'Não foi possível atualizar contrato';
+            var status = updated ? HttpStatus.OK : HttpStatus.BAD_REQUEST
+              , message = updated ? 'Usuário atualizado com sucesso' : 'Não foi possível atualizar usuário';
 
             res.status(status).send({user: updated, message: message});
           });
@@ -76,8 +77,8 @@ module.exports = function (app) {
         , query = {_id: body._id};
 
       repo.removeUser(query, function (err) {
-        var status = err ? 500 : 200
-          , message = err ? 'Não foi possível remover contrato!' : 'Contrato removido com sucesso!';
+        var status = err ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.OK
+          , message = err ? 'Não foi possível remover usuário!' : 'Usuário removido com sucesso!';
 
         res.status(status).send({message: message});
       });
