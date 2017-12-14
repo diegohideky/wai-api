@@ -5,12 +5,12 @@
 'use strict';
 
 var mongoose = require('mongoose')
-  , db = mongoose.createConnection('mongodb://localhost/wai');
+  , db       = mongoose.createConnection('mongodb://localhost/wai');
 
 db.on('error', console.error.bind(console, 'connection error:'));
 
 db.once('open', function() {
-  console.log('DB connected');
+  console.warn('DB connected');
 });
 
 module.exports.db = function () {

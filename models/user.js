@@ -9,7 +9,7 @@ var conn   = require('./../connection/db_connect')
   , db     = conn.db()
   , Schema = conn.Schema();
 
-module.exports = function (app) {
+module.exports = function () {
   var user = new Schema({
     name: String,
     email: String,

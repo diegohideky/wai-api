@@ -44,5 +44,5 @@ module.exports = function (app) {
     removeUser: function (query, callback) {
       User.remove(query, callback);
     }
-  }
+  };
 };

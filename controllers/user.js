@@ -2,7 +2,7 @@
 
 'use strict';
 
-var encrypt = require('./../utils/encrypt')
+var encrypt     = require('./../utils/encrypt')
   , HttpStatus  = require('http-status-codes');
 
 module.exports = function (app) {
@@ -34,10 +34,36 @@ module.exports = function (app) {
 
   var insertOnDB = function (body, callback) {
     repo.insertUser(body, function (doc) {
-      var status = doc ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR
+      var status  = doc ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR
         , message = doc ? 'Usuário cadastrado com sucesso' : 'Não foi possível cadastrar usuário!';
 
       callback({status: status, doc: doc, message: message});
+    });
+  };
+
+  var updateUser = function (body, callback) {
+    repo.findUserById(body._id, function (user) {
+      if (user) {
+        user.set(body);
+
+        repo.updateUser(user, function (updated) {
+          var status = updated ? HttpStatus.OK : HttpStatus.BAD_REQUEST
+            , message = updated ? 'Usuário atualizado com sucesso' : 'Não foi possível atualizar usuário';
+
+          callback({status: status, doc: updated, message: message});
+        });
+      }
+    });
+  };
+
+  var removeUser = function (body, callback) {
+    var query = {_id: body._id};
+
+    repo.removeUser(query, function (err) {
+      var status  = err ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.OK
+        , message = err ? 'Não foi possível remover usuário!' : 'Usuário removido com sucesso!';
+
+      callback({status: status, message: message});
     });
   };
 
@@ -59,29 +85,16 @@ module.exports = function (app) {
     update: function (req, res) {
       var body = req.body;
 
-      repo.findUserById(body._id, function (user) {
-        if (user) {
-          user.set(body);
-
-          repo.updateUser(user, function (updated) {
-            var status = updated ? HttpStatus.OK : HttpStatus.BAD_REQUEST
-              , message = updated ? 'Usuário atualizado com sucesso' : 'Não foi possível atualizar usuário';
-
-            res.status(status).send({user: updated, message: message});
-          });
-        }
+      updateUser(body, function (response) {
+        res.status(response.status).send({user: response.doc, message: response.message});
       });
     },
     remove: function (req, res) {
-      var body = req.body
-        , query = {_id: body._id};
+      var body = req.body;
 
-      repo.removeUser(query, function (err) {
-        var status = err ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.OK
-          , message = err ? 'Não foi possível remover usuário!' : 'Usuário removido com sucesso!';
-
-        res.status(status).send({message: message});
+      removeUser(body, function (response) {
+        res.status(response.status).send({message: response.message});
       });
     }
-  }
+  };
 };
