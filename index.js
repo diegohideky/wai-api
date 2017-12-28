@@ -38,4 +38,10 @@ load('models')
 
 app.listen(process.env.PORT || 3000, function () {
   console.log('Wai on the air!');
+
+  var user = app.controllers.user;
+
+  if (process.env.CREATE_ADMIN === 'create') {
+    user.createAdmin();
+  }
 });

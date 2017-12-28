@@ -45,7 +45,7 @@ module.exports = function (app) {
           var status = doc ? 200 : 400
             , message = doc ? 'Usuário cadastrado com sucesso' : 'Não foi possível criar usuário';
 
-            callback({status: status, doc: doc, message: message});
+          callback({status: status, doc: doc, message: message});
         });
       }
     });

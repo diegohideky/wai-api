@@ -16,6 +16,15 @@ module.exports = function () {
     password: String,
     role: String,
     active: Boolean
+    // dateOfBirth: Date
+    // address: {
+    //   number: Number,
+    //   street: String,
+    //   complement: String,
+    //   cep: Number,
+    //   city: String,
+    //   state: String
+    // }
   });
 
   return db.model('users', user);

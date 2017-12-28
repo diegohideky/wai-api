@@ -68,6 +68,18 @@ module.exports = function (app) {
   };
 
   return {
+    createAdmin: function () {
+      var admin = {
+        name: 'admin',
+        email: 'admin@admin.com',
+        password: 'admin',
+        role: 'ADMIN'
+      };
+
+      insertUser(admin, function(response) {
+        console.warn(response.message);
+      });
+    },
     findAll: function (req, res) {
       repo.findUsers(function (docs) {
         var status = docs.length > 0 ? HttpStatus.OK : HttpStatus.CREATED;
