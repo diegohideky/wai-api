@@ -10,14 +10,12 @@ var conn   = require('./../connection/db_connect')
   , Schema = conn.Schema();
 
 module.exports = function () {
-  var question = new Schema({
-    title: String,
-    alternatives: [
-      {text: String, value: Number}
-    ],
-    answerType: String,
-    subject: String
+  var collaboration = new Schema({
+    collaborator: String,
+    answers: [
+      {question: String, text: String, value: Number}
+    ]
   });
 
-  return db.model('questions', question);
+  return db.model('collaborations', collaboration);
 };
