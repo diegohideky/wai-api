@@ -81,7 +81,7 @@ module.exports = function (app) {
         res.status(response.status).send({user: response.doc, message: response.message});
       });
     },
-    signIn: function (req, res) {
+    signUp: function (req, res) {
       var body = req.body;
 
       insertNewUser(body, function (response) {
