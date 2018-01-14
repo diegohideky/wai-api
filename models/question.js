@@ -16,7 +16,8 @@ module.exports = function () {
       {text: String, value: Number}
     ],
     answerType: String,
-    subject: String
+    subject: String,
+    order: Number
   });
 
   return db.model('questions', question);
