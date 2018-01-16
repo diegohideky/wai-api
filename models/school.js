@@ -12,10 +12,13 @@ var conn   = require('./../connection/db_connect')
 module.exports = function () {
   var school = new Schema({
     name: String,
+    idh: Number,
+    students: Number,
+    postalCode: Number,
     address: String,
     number: Number,
     complement: String,
-    postalCode: Number,
+    neighborhood: String,
     city: String,
     state: String,
     country: String,

@@ -13,10 +13,14 @@ module.exports = function () {
   var question = new Schema({
     title: String,
     alternatives: [
-      {text: String, value: Number}
+      { text: String, value: Number }
+    ],
+    attributes: [
+      { name: String }
     ],
     answerType: String,
-    subject: String
+    subject: String,
+    order: Number
   });
 
   return db.model('questions', question);

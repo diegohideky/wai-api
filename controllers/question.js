@@ -9,7 +9,7 @@ module.exports = function (app) {
   var repo = app.repositories.question;
 
   var insertQuestion = function (body, callback) {
-    var query = {name: body.name};
+    var query = {title: body.title};
 
     repo.findQuestion(query, function (doc) {
       if (!doc) {
