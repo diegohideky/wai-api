@@ -11,13 +11,10 @@ module.exports = function (app) {
   var insertCollaboration = function (body, callback) {
     var query = {name: body.name};
 
-    repo.findCollaboration(query, function (doc) {
-      if (!doc) {
-        insertOnDB(body, callback);
-      } else {
-        callback({status: HttpStatus.BAD_REQUEST, message: 'Colaboração já existe!'});
-      }
-    });
+    body.collaborator = body.answers[0].typed;
+    body.school = body.answers[1].typed;
+
+    insertOnDB(body, callback);
   };
 
   var insertOnDB = function (body, callback) {
@@ -65,6 +62,8 @@ module.exports = function (app) {
     },
     insert: function (req, res) {
       var body = req.body;
+
+      console.log(body);
 
       insertCollaboration(body, function (response) {
         res.status(response.status).send({collaboration: response.doc, message: response.message});
