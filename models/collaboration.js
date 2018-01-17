@@ -12,8 +12,30 @@ var conn   = require('./../connection/db_connect')
 module.exports = function () {
   var collaboration = new Schema({
     collaborator: String,
+    school: String,
     answers: [
-      {question: String, text: String, value: Number}
+      { 
+        question: {
+          title: String,
+          alternatives: [
+            { text: String, value: Number }
+          ],
+          attributes: [
+            { name: String }
+          ],
+          answerType: String,
+          subject: String,
+          order: Number
+        },
+        choises: [
+          {
+            text: String,
+            value: Number,
+            complement: String
+          }
+        ],
+        typed: String
+      }
     ]
   });
 
