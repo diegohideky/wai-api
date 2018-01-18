@@ -17,6 +17,11 @@ module.exports = function (app) {
         promise.then(callback);
       });
     },
+    findCollaborationsBy: function(query, callback) {
+      assert.execQuery(Collaboration.find(query), function(promise) {
+        promise.then(callback);
+      });
+    },
     findCollaboration: function (query, callback) {
       assert.execQuery(Collaboration.findOne(query), function (promise) {
         promise.then(callback);

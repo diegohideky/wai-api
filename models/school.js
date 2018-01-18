@@ -23,7 +23,10 @@ module.exports = function () {
     state: String,
     country: String,
     lat: Number,
-    lng: Number
+    lng: Number,
+    attributes: [
+      {name: String, score: Number, count: Number}
+    ]
   });
 
   return db.model('schools', school);

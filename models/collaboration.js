@@ -13,6 +13,7 @@ module.exports = function () {
   var collaboration = new Schema({
     collaborator: String,
     school: String,
+    datetime: Date,
     answers: [
       { 
         question: {
